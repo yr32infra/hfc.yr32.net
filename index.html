@@ -16,6 +16,7 @@ html, body {
 	padding: 5px;
 	max-width: 960px;
 	margin: auto;
+	padding-bottom: 20px;
 }
 
 video {
@@ -50,11 +51,9 @@ p {
 				<label for=framerateChooser>Choose framerate:</label>
 				<select id=framerateChooser value=30>
 					<option value=24>24 fps (Anime/Film)</option>
-					<option value=30>30 fps</option>
+					<option value=30 selected>30 fps</option>
 					<option value=60>60 fps</option>
-					<option value=0>Custom</option>
 				</select>
-				<input id=customFramerateChooser type=number step=0.01 min=0.01 value=29.97 size=5 disabled> fps
 			</p>
 			<video id=video muted></video>
 			<p>
@@ -87,7 +86,6 @@ p {
 			const fileChooserE = document.getElementById('fileChooser');
 			const videoE = document.getElementById('video');
 			const framerateChooserE = document.getElementById('framerateChooser');
-			const customFramerateChooserE = document.getElementById('customFramerateChooser');
 			const frameE = document.getElementById('frame');
 			const seekbarE = document.getElementById('seekbar');
 			const markerAE = document.getElementById('markerA');
@@ -96,15 +94,10 @@ p {
 			let totalFrame = 0, currentFrame = 0, markerAFrame = 0, markerBFrame = 0;
 
 			const getFramerateByUI = () => {
-				if (framerateChooserE.value === '0') {
-					return parseFloat(customFramerateChooserE.value);
-				}
 				return parseFloat(framerateChooserE.value);
 			};
 
 			const updateUiState = () => {
-				customFramerateChooserE.disabled = framerateChooserE.value !== '0';
-				frameE.textContent = `${currentFrame+1}/${totalFrame+1}`;
 				seekbarE.max = totalFrame;
 				seekbarE.value = currentFrame;
 				currentFrame = Math.min(totalFrame, currentFrame);
@@ -112,6 +105,7 @@ p {
 				markerBFrame = Math.min(totalFrame, markerBFrame);
 				markerAE.textContent = markerAFrame + 1;
 				markerBE.textContent = markerBFrame + 1;
+				frameE.textContent = `${currentFrame+1}/${totalFrame+1}`;
 				differentE.textContent = `${markerBFrame - markerAFrame} frame / ${((markerBFrame - markerAFrame) / getFramerateByUI()).toFixed(3)} sec`;
 				if (videoE.readyState >= 2) {
 					totalFrame = Math.floor(videoE.duration * getFramerateByUI());
