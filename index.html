@@ -30,6 +30,11 @@ p {
 	margin-bottom: 2px;
 }
 
+.seekButton {
+	width: 15%;
+	height: 50px;
+}
+
 .uiButton {
 	width: 20%;
 	height: 50px;
@@ -63,10 +68,12 @@ p {
 				<span id=frame>1/1</span>
 			</p>
 			<div>
-				<input class=uiButton type=button value='<<' onclick=frameDecrement(getFramerateByUI())>
-				<input class=uiButton type=button value='<' onclick=frameDecrement(1)>
-				<input class=uiButton type=button value='>' onclick=frameIncrement(1)>
-				<input class=uiButton type=button value='>>' onclick=frameIncrement(getFramerateByUI())>
+				<input class=seekButton type=button value='< 1s' onclick=frameDecrement(getFramerateByUI())>
+				<input class=seekButton type=button value='< 5' onclick=frameDecrement(5)>
+				<input class=seekButton type=button value='<' onclick=frameDecrement(1)>
+				<input class=seekButton type=button value='>' onclick=frameIncrement(1)>
+				<input class=seekButton type=button value='5 >' onclick=frameIncrement(5)>
+				<input class=seekButton type=button value='1s >' onclick=frameIncrement(getFramerateByUI())>
 			</div>
 			<div>
 				<p>marker A: <span id=markerA>1</span></p>
