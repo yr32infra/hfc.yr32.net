@@ -3,51 +3,59 @@
 	<head>
 		<meta charset=utf-8>
 		<meta name=viewport content="width=device-width, initial-scale=1.0">
-		<title>Video Player</title>
+		<title>Frame Checker</title>
+		<meta property=og:type content=website>
+		<meta property=og:title content='Frame Checker'>
+		<meta property=og:description content=静的な簡易フレームチェッカ>
+
+		<meta property=og:url content=https://hfc.yr32.net/>
+		<meta name=twitter:card content=summary>
+		<meta name=twitter:site content=@yanorei32>
+		<meta name=twitter:creator content=@yanorei32>
 		<style>
-html, body {
-	width: 100%;
-	margin: 0;
-	padding: 0;
-	border: 0;
-}
+			html, body {
+				width: 100%;
+				margin: 0;
+				padding: 0;
+				border: 0;
+			}
 
-.container {
-	padding: 5px;
-	max-width: 960px;
-	margin: auto;
-	padding-bottom: 20px;
-}
+			.container {
+				padding: 5px;
+				max-width: 960px;
+				margin: auto;
+				padding-bottom: 20px;
+			}
 
-video {
-	width: 95%;
-	max-height: 408px;
-	background-color: lightgray;
-}
+			video {
+				width: 95%;
+				max-height: 408px;
+				background-color: lightgray;
+			}
 
-p {
-	margin-top: 2px;
-	margin-bottom: 2px;
-}
+			p {
+				margin-top: 2px;
+				margin-bottom: 2px;
+			}
 
-.seekButton {
-	width: 15%;
-	height: 50px;
-}
+			.seekButton {
+				width: 15%;
+				height: 50px;
+			}
 
-.uiButton {
-	width: 20%;
-	height: 50px;
-}
+			.uiButton {
+				width: 20%;
+				height: 50px;
+			}
 
-#seekbar {
-	width: 95%;
-}
+			#seekbar {
+				width: 95%;
+			}
 		</style>
 	</head>
 	<body>
 		<div class=container>
-			<h1>Video Player</h1>
+			<h1>Frame Checker</h1>
 			<p>
 				<label for=fileChooser>Choose file:</label>
 				<input type=file id=fileChooser accept=video/* onchange=>
