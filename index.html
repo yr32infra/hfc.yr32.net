@@ -1,0 +1,130 @@
+<!DOCTYPE HTML>
+<html lang=en>
+	<head>
+		<meta charset=utf-8>
+		<meta name=viewport content="width=device-width, initial-scale=1.0">
+		<title>Video Player</title>
+		<style>
+html, body {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.container {
+	padding: 5px;
+	max-width: 960px;
+	margin: auto;
+}
+
+video {
+	width: 95%;
+	background-color: lightgray;
+}
+
+p {
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+.uiButton {
+	width: 20%;
+	height: 50px;
+}
+
+#seekbar {
+	width: 95%;
+}
+		</style>
+	</head>
+	<body>
+		<div class=container>
+			<h1>Video Player</h1>
+			<p>
+				<label for=fileChooser>Choose file:</label>
+				<input type=file id=fileChooser accept=video/* onchange=>
+			</p>
+			<p>
+				<label for=framerateChooser>Choose framerate:</label>
+				<select id=framerateChooser value=30>
+					<option value=24>24 fps (Anime/Film)</option>
+					<option value=30>30 fps</option>
+					<option value=60>60 fps</option>
+					<option value=0>Custom</option>
+				</select>
+				<input id=customFramerateChooser type=number step=0.01 min=0.01 value=29.97 size=5 disabled> fps
+			</p>
+			<video id=video muted></video>
+			<p>
+				<input type=range id=seekbar max=0 min=0 value=0></input>
+			</p>
+			<p>
+				<span id=frame>1/1</span>
+			</p>
+			<div>
+				<input class=uiButton type=button value='<<' onclick=frameDecrement(getFramerateByUI())>
+				<input class=uiButton type=button value='<' onclick=frameDecrement(1)>
+				<input class=uiButton type=button value='>' onclick=frameIncrement(1)>
+				<input class=uiButton type=button value='>>' onclick=frameIncrement(getFramerateByUI())>
+			</div>
+		</div>
+		<script>
+			const fileChooserE = document.getElementById('fileChooser');
+			const videoE = document.getElementById('video');
+			const framerateChooserE = document.getElementById('framerateChooser');
+			const customFramerateChooserE = document.getElementById('customFramerateChooser');
+			const frameE = document.getElementById('frame');
+			const seekbarE = document.getElementById('seekbar');
+			let totalFrame = 0, currentFrame = 0;
+
+			const getFramerateByUI = () => {
+				if (framerateChooserE.value === '0') {
+					return parseFloat(customFramerateChooserE.value);
+				}
+				return parseFloat(framerateChooserE.value);
+			};
+
+			const updateUiState = () => {
+				customFramerateChooserE.disabled = framerateChooserE.value !== '0';
+				frameE.textContent = `${currentFrame+1}/${totalFrame+1}`;
+				seekbarE.max = totalFrame;
+				seekbarE.value = currentFrame;
+				if (videoE.readyState >= 4) {
+					videoE.currentTime = (currentFrame / getFramerateByUI());
+				}
+			};
+
+			const frameDecrement = (n) => {
+				currentFrame -= n;
+				currentFrame = Math.max(0, currentFrame)
+				updateUiState();
+			};
+
+			const frameIncrement = (n) => {
+				currentFrame += n;
+				currentFrame = Math.min(totalFrame, currentFrame)
+				updateUiState();
+			};
+
+			videoE.addEventListener('loadedmetadata', () => {
+				totalFrame = Math.floor(videoE.duration * getFramerateByUI());
+				currentFrame = Math.min(currentFrame, totalFrame);
+				updateUiState();
+			});
+
+			fileChooserE.addEventListener('change', (e) => {
+				videoE.src = URL.createObjectURL(e.srcElement.files[0]);
+			});
+
+			seekbarE.addEventListener('change', (e) => {
+				currentFrame = parseInt(seekbarE.value);
+				updateUiState();
+			});
+
+			updateUiState();
+			framerateChooserE.addEventListener('change', updateUiState);
+		</script>
+	</body>
+</html>
+
