@@ -68,6 +68,19 @@ p {
 				<input class=uiButton type=button value='>' onclick=frameIncrement(1)>
 				<input class=uiButton type=button value='>>' onclick=frameIncrement(getFramerateByUI())>
 			</div>
+			<div>
+				<p>marker A: <span id=markerA>1</span></p>
+				<input class=uiButton type=button value='SET' onclick=setMarkerA()>
+				<input class=uiButton type=button value='JMP' onclick=jmpMarkerA()>
+			</div>
+			<div>
+				<p>marker B: <span id=markerB>1</span></p>
+				<input class=uiButton type=button value='SET' onclick=setMarkerB()>
+				<input class=uiButton type=button value='JMP' onclick=jmpMarkerB()>
+			</div>
+			<div>
+				different: <span id=different>0 frame / 0 sec</span>
+			</div>
 		</div>
 		<script>
 			const fileChooserE = document.getElementById('fileChooser');
@@ -76,7 +89,10 @@ p {
 			const customFramerateChooserE = document.getElementById('customFramerateChooser');
 			const frameE = document.getElementById('frame');
 			const seekbarE = document.getElementById('seekbar');
-			let totalFrame = 0, currentFrame = 0;
+			const markerAE = document.getElementById('markerA');
+			const markerBE = document.getElementById('markerB');
+			const differentE = document.getElementById('different');
+			let totalFrame = 0, currentFrame = 0, markerAFrame = 0, markerBFrame = 0;
 
 			const getFramerateByUI = () => {
 				if (framerateChooserE.value === '0') {
@@ -90,11 +106,37 @@ p {
 				frameE.textContent = `${currentFrame+1}/${totalFrame+1}`;
 				seekbarE.max = totalFrame;
 				seekbarE.value = currentFrame;
+				currentFrame = Math.min(totalFrame, currentFrame);
+				markerAFrame = Math.min(totalFrame, markerAFrame);
+				markerBFrame = Math.min(totalFrame, markerBFrame);
+				markerAE.textContent = markerAFrame + 1;
+				markerBE.textContent = markerBFrame + 1;
+				differentE.textContent = `${markerBFrame - markerAFrame} frame / ${((markerBFrame - markerAFrame) / getFramerateByUI()).toFixed(3)} sec`;
 				if (videoE.readyState >= 2) {
 					totalFrame = Math.floor(videoE.duration * getFramerateByUI());
 					currentFrame = Math.min(currentFrame, totalFrame);
 					videoE.currentTime = (currentFrame / getFramerateByUI());
 				}
+			};
+
+			const jmpMarkerA = () => {
+				currentFrame = markerAFrame;
+				updateUiState();
+			};
+
+			const jmpMarkerB = () => {
+				currentFrame = markerBFrame;
+				updateUiState();
+			};
+
+			const setMarkerA = () => {
+				markerAFrame = currentFrame;
+				updateUiState();
+			};
+
+			const setMarkerB = () => {
+				markerBFrame = currentFrame;
+				updateUiState();
 			};
 
 			const frameDecrement = (n) => {
@@ -105,11 +147,11 @@ p {
 
 			const frameIncrement = (n) => {
 				currentFrame += n;
-				currentFrame = Math.min(totalFrame, currentFrame)
+				//currentFrame = Math.min(totalFrame, currentFrame);
 				updateUiState();
 			};
 
-			videoE.addEventListener('loadedmetadata', () => {
+			videoE.addEventListener('canplay', () => {
 				updateUiState();
 			});
 
