@@ -90,7 +90,9 @@ p {
 				frameE.textContent = `${currentFrame+1}/${totalFrame+1}`;
 				seekbarE.max = totalFrame;
 				seekbarE.value = currentFrame;
-				if (videoE.readyState >= 4) {
+				if (videoE.readyState >= 2) {
+					totalFrame = Math.floor(videoE.duration * getFramerateByUI());
+					currentFrame = Math.min(currentFrame, totalFrame);
 					videoE.currentTime = (currentFrame / getFramerateByUI());
 				}
 			};
@@ -108,8 +110,6 @@ p {
 			};
 
 			videoE.addEventListener('loadedmetadata', () => {
-				totalFrame = Math.floor(videoE.duration * getFramerateByUI());
-				currentFrame = Math.min(currentFrame, totalFrame);
 				updateUiState();
 			});
 
