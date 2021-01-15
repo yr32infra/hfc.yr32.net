@@ -5,7 +5,7 @@
 		<meta name=viewport content="width=device-width, initial-scale=1.0">
 		<title>Frame Checker</title>
 		<meta property=og:type content=website>
-		<meta property=og:title content='Frame Checker'>
+		<meta property=og:title content="Frame Checker">
 		<meta property=og:description content=静的な簡易フレームチェッカ>
 		<meta property=og:image content=/images/ogp.png>
 		<meta property=og:url content=https://hfc.yr32.net/>
@@ -70,7 +70,7 @@
 			<h1>Frame Checker</h1>
 			<p>
 				<label for=fileChooser>Choose file:</label>
-				<input type=file id=fileChooser accept=video/* onchange=>
+				<input type=file id=fileChooser accept=video/*>
 			</p>
 			<p>
 				<label for=framerateChooser>Choose framerate:</label>
@@ -82,28 +82,28 @@
 			</p>
 			<video id=video muted></video>
 			<p>
-				<input type=range id=seekbar max=0 min=0 value=0></input>
+				<input type=range id=seekbar max=0 min=0 value=0>
 			</p>
 			<p>
 				<span id=frame>1/1</span>
 			</p>
 			<div>
-				<input class=seekButton type=button value='< 1s' onclick=frameDecrement(getFramerateByUI())>
-				<input class=seekButton type=button value='< 5' onclick=frameDecrement(5)>
-				<input class=seekButton type=button value='<' onclick=frameDecrement(1)>
-				<input class=seekButton type=button value='>' onclick=frameIncrement(1)>
-				<input class=seekButton type=button value='5 >' onclick=frameIncrement(5)>
-				<input class=seekButton type=button value='1s >' onclick=frameIncrement(getFramerateByUI())>
+				<input class=seekButton type=button value="< 1s" onclick=frameDecrement(getFramerateByUI())>
+				<input class=seekButton type=button value="< 5" onclick=frameDecrement(5)>
+				<input class=seekButton type=button value="<" onclick=frameDecrement(1)>
+				<input class=seekButton type=button value=">" onclick=frameIncrement(1)>
+				<input class=seekButton type=button value="5 >" onclick=frameIncrement(5)>
+				<input class=seekButton type=button value="1s >" onclick=frameIncrement(getFramerateByUI())>
 			</div>
 			<div>
 				<p>marker A: <span id=markerA>1</span></p>
-				<input class=uiButton type=button value='SET' onclick=setMarkerA()>
-				<input class=uiButton type=button value='JMP' onclick=jmpMarkerA()>
+				<input class=uiButton type=button value="SET" onclick=setMarkerA()>
+				<input class=uiButton type=button value="JMP" onclick=jmpMarkerA()>
 			</div>
 			<div>
 				<p>marker B: <span id=markerB>1</span></p>
-				<input class=uiButton type=button value='SET' onclick=setMarkerB()>
-				<input class=uiButton type=button value='JMP' onclick=jmpMarkerB()>
+				<input class=uiButton type=button value="SET" onclick=setMarkerB()>
+				<input class=uiButton type=button value="JMP" onclick=jmpMarkerB()>
 			</div>
 			<div>
 				different: <span id=different>0 frame / 0 sec</span>
